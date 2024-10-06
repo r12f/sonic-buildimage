@@ -1,13 +1,25 @@
 FROM p4lang/behavioral-model@sha256:ce45720e28a96a50f275c1b511cd84c2558b62f2cf7a7e506765183bc3fb2e32
 ## FROM docker-config-engine-bookworm-{{DOCKER_USERNAME}}:{{DOCKER_USERTAG}}
 
+SHELL ["/bin/bash", "-c"]
+
 ## Make apt-get non-interactive
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update
 
-RUN apt-get install -f -y supervisor rsyslog  python3-pip
+RUN apt-get install -f -y supervisor rsyslog python3-pip python3-venv
 RUN pip3 install supervisord-dependent-startup
+
+# Install P4Runtime Shell.
+#
+# It has to be installed into a virtual environment otherwise it won't be able to find
+# the protobuf module correctly.
+#
+# In the container, the venv can be entered by using: source /p4rtsh/venv/bin/activate
+RUN python3 -m venv /p4rtsh/venv && \
+    source /p4rtsh/venv/bin/activate && \
+    pip3 install p4runtime_shell
 
 COPY ["start.sh", "/usr/bin/"]
 
