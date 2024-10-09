@@ -6,9 +6,9 @@ StartLimitBurst=3
 
 [Service]
 User=root
-ExecStartPre=/usr/local/bin/dash_engine.sh start
-ExecStart=/usr/local/bin/dash_engine.sh wait
-ExecStop=/usr/local/bin/dash_engine.sh stop
+ExecStartPre=/usr/bin/dash_engine.sh start
+ExecStart=/usr/bin/dash_engine.sh wait
+ExecStop=/usr/bin/dash_engine.sh stop
 Restart=always
 RestartSec=30
 
