@@ -19,7 +19,7 @@ RUN pip3 install supervisord-dependent-startup
 # In the container, the venv can be entered by using: source /p4rtsh/venv/bin/activate
 RUN python3 -m venv /p4rtsh/venv && \
     source /p4rtsh/venv/bin/activate && \
-    pip3 install p4runtime_shell
+    pip3 install p4runtime_shell tabulate
 
 COPY ["start.sh", "/usr/bin/"]
 
